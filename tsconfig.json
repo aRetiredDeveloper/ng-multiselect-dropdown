@@ -11,6 +11,12 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
+    "paths": {
+      "ng-simple-multiselect-dropdown": [
+        "dist/ng-simple-multiselect-dropdown/ng-simple-multiselect-dropdown",
+        "dist/ng-simple-multiselect-dropdown"
+      ]
+    },
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,

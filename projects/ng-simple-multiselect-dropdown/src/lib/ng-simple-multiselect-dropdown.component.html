@@ -1,0 +1,42 @@
+<div class="mat-multiselect-dropdown" [ngClass]="{ 'disable-multi-select': config.disable }">
+  <div eventDirective (eventOutside)="toggleDropDown($event, true)">
+    <div class="selectBox" (click)="toggleDropDown($event)">
+      <div class="option-select">
+        <div class="left-div">
+          <span class="placeholder" *ngIf="!addedOptions.length">{{ config.placeHolderText }}</span>
+          <span class="over-select" *ngIf="addedOptions && addedOptions.length">
+            <ul class="over-select list">
+              <li *ngFor="let added of displayAddedItems">
+                {{ added.label }} <span class="remove-option" (click)="removeAddedOption(added)">x</span>
+              </li>
+            </ul>
+          </span>
+        </div>
+        <div class="dropdown-arrow"><span *ngIf="extraItems> 0">+{{extraItems}}</span></div>
+      </div>
+      <div class="clear-both"></div>
+    </div>
+    <div class="dropdown" [ngClass]="{ checkboxes: toggleOptions }">
+      <div class="dropdown-wrapper">
+        <div class="search-wrapper">
+          <div class="search-container">
+            <input type="text" (keyup)="search($event)" [(ngModel)]="filter" class="search-input" [placeholder]="config.searchText"/>
+          </div>
+        </div>
+        <div class="dropdown-list">
+        <label class="label-option select-all" (change)="selectAll($event)">
+          <input type="checkbox" [checked]="selectedAll" />{{ !this.selectedAll ? config.selectAllText : config.deSelectAllText}}
+        </label>
+        <label
+          class="label-option"
+          *ngFor="let option of (_listOptions | MultiFilterSearch: filter)"
+          (change)="selectOptions($event, option)"
+        >
+          <input type="checkbox" [checked]="option.selected" [ngClass]="{ 'hide-checkbox': !option.id }" />
+          <span [ngClass]="{ 'align-center': !option.id }">{{ option.label }} </span>
+        </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
