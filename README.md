@@ -100,13 +100,28 @@ export class AppComponent {
 ## Output Methods
 | Methods        | Description   |   Usage |
 | ------------- | ------------- |---------------|-----------------
-| selectedResult |         | Select All text message on dropdown | Select All |
-| deSelectAllText  | string     | Deselect All text message on dropdown to deselectAll | Deselect All |
-
+| selectedResult |  It will give all the selected result in array format | (selectedResult)="selectedResult($event)" |
+| addedItemResult  | It will give the item added by clicking on the label or checkbox(only one result) |(addedItemResult)="addedItemResult($event)" |
+| removeItemResult | It will give the item removed either by clicking on the selected checkbox or label itself(only one item) | (addedItemResult)="addedItemResult($event)" |
+| removeAllResult | It will always provide empty array list when we click on the Deselect All checkbox | (removeAllResult)="removeAllResult($event)" |
+  addAllResult | It will give all the selected result ie all list present in the dropdown   | (addAllResult)="addAllResult($event)"    |
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 Please make sure to update tests as appropriate.
 
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
+## Boring & Legal stuff
+Copyright [2022] [Joydeep Banerjee]
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
