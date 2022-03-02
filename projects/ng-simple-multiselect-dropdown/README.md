@@ -98,8 +98,8 @@ export class AppComponent {
  | maxSelectedCount | number | It will display the option of +1, +2 after reaching it to maximum number option selection |  4 |
 
 ## Output Methods
-| Methods        | Description   |   Usage |
-| ------------- | ------------- |---------------|
+| Methods       | Description   |   Usage     |
+| ------------- | ------------- |---------------
 | selectedResult |  It will give all the selected result in array format | (selectedResult)="selectedResult($event)" |
 | addedItemResult  | It will give the item added by clicking on the label or checkbox(only one result) |(addedItemResult)="addedItemResult($event)" |
 | removeItemResult | It will give the item removed either by clicking on the selected checkbox or label itself(only one item) | (addedItemResult)="addedItemResult($event)" |
