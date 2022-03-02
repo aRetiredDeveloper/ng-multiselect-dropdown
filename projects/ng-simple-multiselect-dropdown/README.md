@@ -99,13 +99,10 @@ export class AppComponent {
 
 ## Output Methods
 
-| Methods       | Description   |   Usage     |
+| Methods       | Description   | Usage        |
 | ------------- | ------------- |---------------
 | selectedResult |  It will give all the selected result in array format | (selectedResult)="selectedResult($event)" |
-| addedItemResult  | It will give the item added by clicking on the label or checkbox(only one result) |(addedItemResult)="addedItemResult($event)" |
-| removeItemResult | It will give the item removed either by clicking on the selected checkbox or label itself(only one item) | (addedItemResult)="addedItemResult($event)" |
-| removeAllResult | It will always provide empty array list when we click on the Deselect All checkbox | (removeAllResult)="removeAllResult($event)" |
-  addAllResult | It will give all the selected result ie all list present in the dropdown   | (addAllResult)="addAllResult($event)"    |
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
