@@ -98,6 +98,7 @@ export class AppComponent {
  | maxSelectedCount | number | It will display the option of +1, +2 after reaching it to maximum number option selection |  4 |
 
 ## Output Methods
+
 | Methods       | Description   |   Usage     |
 | ------------- | ------------- |---------------
 | selectedResult |  It will give all the selected result in array format | (selectedResult)="selectedResult($event)" |
