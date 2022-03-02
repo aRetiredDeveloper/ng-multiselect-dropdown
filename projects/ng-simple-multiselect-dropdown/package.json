@@ -1,5 +1,10 @@
 {
   "name": "ng-simple-multiselect-dropdown",
+  "author": "Joydeep Banerjee",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aRetiredDeveloper/ng-multiselect-dropdown"
+  },
   "version": "0.0.4",
   "peerDependencies": {
     "@angular/common": "^13.2.0",
@@ -7,5 +12,18 @@
   },
   "dependencies": {
     "tslib": "^2.3.0"
-  }
+  },
+  "homepage": "https://github.com/aRetiredDeveloper/ng-multiselect-dropdown",
+  "keywords": [
+    "angular",
+    "javascript",
+    "typescript",
+    "simple multi select drop down",
+    "ng multi select drop down",
+    "super simple multi select drop down"
+  ],
+  "bugs": {
+    "url": "https://github.com/aRetiredDeveloper/ng-multiselect-dropdown/issues"
+  },
+  "license": "Apachae 2.0"
 }
