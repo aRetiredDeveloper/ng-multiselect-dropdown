@@ -26,7 +26,7 @@ export class NgSimpleMultiselectDropdownComponent implements OnInit {
     searchText: "Type here to search",
     noDataFound: "No result found!",
     maxSelectedCount: 4,
-    selectionLimit: 5,
+    selectionLimit: 0,
     valueKey: 'id',
     labelKey: 'label',
     searchMinTypeLength: 4

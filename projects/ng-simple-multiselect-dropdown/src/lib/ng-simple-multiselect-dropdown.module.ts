@@ -13,10 +13,10 @@ import { MultiFilterSearch } from './ng-filter-search.pipe';
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 
-export class MultiSelectDropDownModule {
-    static forRoot(): ModuleWithProviders<MultiSelectDropDownModule> {
+export class NgMultiSelectDropDownModule {
+    static forRoot(): ModuleWithProviders<NgMultiSelectDropDownModule> {
       return {
-        ngModule: MultiSelectDropDownModule
+        ngModule: NgMultiSelectDropDownModule
       };
     }
 }
