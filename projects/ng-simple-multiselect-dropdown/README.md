@@ -85,17 +85,21 @@ export class AppComponent {
 ## Configuration Settings:-
 
 
-| Config        | Type          | Description   |   Default Value |
-| ------------- | ------------- |---------------|-----------------
-| selectAllText | string        | Select All text message on dropdown | Select All |
-| deSelectAllText  | string     | Deselect All text message on dropdown to deselectAll | Deselect All |
-| singleSelection | boolean     | User can select only one option if enable | false |
-| placeHolderText | string |  Placeholder message on dropdown button   | 'Select an option!' |
-| search |  boolean | User can able to filter from the listOption | true |
-| disable | boolean | Disable the whole component   | false | 
- | searchText | string |  Custom message display for search placeholder | Type here to search | 
-|  noDataFound | string | Custom message to display when there is no data or no search result found using filter or from your api  |  No result found! | 
- | maxSelectedCount | number | It will display the option of +1, +2 after reaching it to maximum number option selection |  4 |
+| Config        | Type          | Description   |   Default Value |   Required    |
+| ------------- | ------------- |---------------|-----------------|----------------
+| selectAllText | string        | Select All text message on dropdown | Select All | optional | 
+| deSelectAllText  | string     | Deselect All text message on dropdown to deselectAll | Deselect All | optional   |
+| singleSelection | boolean     | User can select only one option if enable | false |  Required   |
+| placeHolderText | string |  Placeholder message on dropdown button   | 'Select an option!' | optional     |
+| search |  boolean | User can able to filter from the listOption | true |   optional   |
+| disable | boolean | Disable the whole component   | false |    optional    |
+ | searchText | string |  Custom message display for search placeholder | Type here to search | optional   |
+|  noDataFound | string | Custom message to display when there is no data or no search result found using filter or from your api  |  No result found! | optional |
+ | maxSelectedCount | number | It will display the option of +1, +2 after reaching it to maximum number option selection |  4 |  optional |
+ | valueKey  |    string   |  Custom value key for drop down list eg id, value   | id |    optiobal   |
+ |  labelKey |   string   |  Custom Label text to display in the dropdown list   |   label   |   optional   |
+ |  searchMinTypeLength    | number    |  Minimum length required to filter label from the dropdown list options |  4   | optional |
+ |   selectionLimit   | number   | Maximum a user can select or add from the dropdown list    |  0   | optional   |
 
 ## Output Methods
 
