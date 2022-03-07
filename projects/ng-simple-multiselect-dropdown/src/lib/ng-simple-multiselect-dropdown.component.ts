@@ -14,16 +14,9 @@ export class NgSimpleMultiselectDropdownComponent implements OnInit {
   addedOptions: Array<DropDownLists> = [];
   displayAddedItems: Array<DropDownLists> = [];
   _listOptions: Array<DropDownLists> = [];
-  
-  @Input() set
-  listOptions(value: Array<DropDownLists>) {
-    this._listOptions = value;
-    this.addedOptions = this._listOptions.filter(option => option.selected);
-    this.setValue();
-  };
-  
-  @Input()
-  config: DropDownConfig = {
+  disabledList: Array<any> = [];
+  _totalAddedItems: number = 0;
+  defaultConfig = {
     singleSelection: false,
     selectAllText: 'Select All',
     deSelectAllText: 'Deselect All',
@@ -32,8 +25,27 @@ export class NgSimpleMultiselectDropdownComponent implements OnInit {
     disable: false,
     searchText: "Type here to search",
     noDataFound: "No result found!",
-    maxSelectedCount: 4
+    maxSelectedCount: 4,
+    selectionLimit: 5,
+    valueKey: 'id',
+    labelKey: 'label',
+    searchMinTypeLength: 4
   };
+  
+  @Input() set
+  listOptions(value: Array<DropDownLists>) {
+    this._listOptions = value.map((option: any) => new DropDownLists({id: option[this.defaultConfig.valueKey],
+        label: option[this.defaultConfig.labelKey],
+        selected: option.selected,
+        disabled: option.disabled}));
+    this.setAddedOptions();
+    this.setValue();
+  };
+  
+  @Input() set
+  config(value: DropDownConfig) {
+    this.defaultConfig = {...this.defaultConfig, ...value};
+  }
 
   @Output()
   selectedResult: EventEmitter<Array<DropDownLists>> = new EventEmitter<Array<DropDownLists>>();
@@ -53,15 +65,24 @@ export class NgSimpleMultiselectDropdownComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    console.log('Hello!!!')
-    this.addedOptions = this._listOptions.filter(option => option.selected);
+    this.setAddedOptions();
     this.setValue();
+  }
+
+  setAddedOptions() {
+    this.disabledList = this._listOptions.filter(option => option.disabled).map(option => option.id);
+    const addedOptions = this._listOptions.filter(option => option.selected);
+    this.addedOptions = this.defaultConfig.singleSelection && this.addedOptions.length > 1 ? addedOptions.slice(0,1) :
+       addedOptions.slice(0, this.defaultConfig.selectionLimit || this._listOptions.length);
+    if (this.defaultConfig.selectionLimit && this.defaultConfig.selectionLimit <= this.addedOptions.length) {
+        return this.disableUnselectedOption();
+    }
   }
 
   setValue(): void {
     if (this.addedOptions.length) {
-      this.displayAddedItems = this.addedOptions.slice(0, (this.config.maxSelectedCount || 4) + 1);
-      this.extraItems = calculateExtraItems<CalculateExtraItemInterface>(this.addedOptions.length,this.config.maxSelectedCount || 4);
+      this.displayAddedItems = this.addedOptions.slice(0, (this.defaultConfig.maxSelectedCount));
+      this.extraItems = calculateExtraItems<CalculateExtraItemInterface>(this.addedOptions.length,this.defaultConfig.maxSelectedCount);
     }
   }
 
@@ -70,26 +91,53 @@ export class NgSimpleMultiselectDropdownComponent implements OnInit {
   }
 
   selectOptions(event: Event, option: DropDownLists): void {
-    const selectedOptions = !option.selected;
-    (() => !selectedOptions ? this.removeItem(option) : this.addItem(option))();
-    option.selected = selectedOptions;
+    if (this.defaultConfig.singleSelection) {
+      this.addItem(option);
+    } else {
+      const selectedOptions = !option.selected;
+      option.selected = selectedOptions;
+      (() => !selectedOptions ? this.removeItem(option) : this.addItem(option))();
+    }
     this.selectedResult.emit(this.addedOptions);
+    event.preventDefault();
   }
 
   addItem(option: DropDownLists): void {
-    this.addedOptions.push(option);
-    this.displayAddedItems = this.addedOptions.slice(0, (this.config.maxSelectedCount || 4) + 1);
-    this.extraItems = calculateExtraItems<CalculateExtraItemInterface>(this.addedOptions.length,this.config.maxSelectedCount || 4);
+    if (this.defaultConfig.selectionLimit && this.defaultConfig.selectionLimit <= this.addedOptions.length) {
+      return this.disableUnselectedOption();
+    }
+    (() => this.defaultConfig.singleSelection && this.addedOptions.length ? this.addedOptions = [option] :
+       this.addedOptions.push(option))();
+    this.setValue();
     this.addedItemResult.emit(option);
+    if (this.defaultConfig.selectionLimit && this.defaultConfig.selectionLimit <= this.addedOptions.length) {
+      return this.disableUnselectedOption();
+    }
   }
 
   removeItem(option: DropDownLists): void {
-    this.addedOptions = this.addedOptions.filter(addedOption => addedOption.id !== option.id);
-    this.extraItems = calculateExtraItems<CalculateExtraItemInterface>(this.addedOptions.length,this.config.maxSelectedCount || 4);;
+    this.addedOptions = this.addedOptions.filter((addedOption: any) => addedOption.id !== option.id);
+    this._listOptions = this._listOptions.map(item => ({...item, ...{selected: option.id === item.id ? false: item.selected}}));
+    this.setValue();
     this.removeItemResult.emit(option);
+    if (this.defaultConfig.selectionLimit && this.defaultConfig.selectionLimit >= this.addedOptions.length) {
+      this.enableUnselectedOption();
+    }
+  }
+
+  enableUnselectedOption() {
+    this._listOptions = this._listOptions.map(option => ({...option, ...{disabled: this.disabledList.includes(option.id) ? true: false}}));
+  }
+  
+  disableUnselectedOption() {
+    this._listOptions = this._listOptions.map(option => ({...option, ...{selected: option.selected, 
+      disabled: option.selected  ? false : true}}));
   }
 
   selectAll(event: Event): void {
+    if (this.defaultConfig.singleSelection && this.addedOptions.length) {
+      return;
+    }
     (() => this.selectedAll ? this.removeAllItems() : this.addAllItems())();
     this.selectedAll = !this.selectedAll;
     this.selectedResult.emit(this.addedOptions);
@@ -97,7 +145,8 @@ export class NgSimpleMultiselectDropdownComponent implements OnInit {
 
   addAllItems() {
     this.addedOptions = this._listOptions.filter((option: DropDownLists) => option.label.includes(this.filter));
-    this._listOptions = this._listOptions.map((option: DropDownLists) => this.addedOptions.filter((a: DropDownLists) => a.id === option.id).length > 0
+    this._listOptions = this._listOptions.map((option: DropDownLists) => this.addedOptions.filter((a: DropDownLists) => 
+    a.id === option.id).length > 0
     ? ({...option, ...{selected: true}}) : option);
     this.setValue();
     this.addAllResult.emit(this.listOptions);
@@ -115,11 +164,16 @@ export class NgSimpleMultiselectDropdownComponent implements OnInit {
       return;
     }
     this.addedOptions = this.addedOptions.filter(addedOption => addedOption.id !== option.id);
+    const optionFound = this._listOptions.findIndex(item => item.id === option.id);
+    this._listOptions = this._listOptions.map(item => ({...item, ...{selected: item.id === option.id ? false: item.selected,
+      disabled: false}}));
+    this._listOptions[optionFound].selected = false;
     this.setValue();
     this.selectedResult.emit(this.addedOptions);
   }
 
   search(event: any) {
-    this.filter = event.target.value;
+    this.filter = event.target.value && event.target.value.length >= this.defaultConfig.searchMinTypeLength ? event.target.value :
+      '';
   }
 }

@@ -1,7 +1,16 @@
-export interface DropDownLists {
-    id: number,
-    label: string,
-    selected: boolean
+export class DropDownLists {
+    id: String;
+    label: String;
+    selected: Boolean;
+    disabled: Boolean
+    
+    constructor(property: any) {
+        this.id = property.id;
+        this.label = property.label;
+        this.selected = property.selected;
+        this.disabled = property.disabled;
+    }
+
 };
 
 export interface DropDownConfig {
@@ -14,7 +23,10 @@ export interface DropDownConfig {
     selectionLimit?: number,
     searchText?: string,
     noDataFound?: string,
-    maxSelectedCount? : number
+    maxSelectedCount? : number,
+    valueKey?: string,
+    labelKey?: string,
+    searchMinTypeLength? : number
 };
 
 export interface CalculateExtraItemInterface {

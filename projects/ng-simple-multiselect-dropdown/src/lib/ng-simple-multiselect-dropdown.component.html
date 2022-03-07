@@ -1,9 +1,9 @@
-<div class="mat-multiselect-dropdown" [ngClass]="{ 'disable-multi-select': config.disable }">
+<div class="mat-multiselect-dropdown" [ngClass]="{ 'disable-multi-select': defaultConfig.disable }">
   <div eventDirective (eventOutside)="toggleDropDown($event, true)">
     <div class="selectBox" (click)="toggleDropDown($event)">
       <div class="option-select">
         <div class="left-div">
-          <span class="placeholder" *ngIf="!addedOptions.length">{{ config.placeHolderText }}</span>
+          <span class="placeholder" *ngIf="!addedOptions.length">{{ defaultConfig.placeHolderText }}</span>
           <span class="over-select" *ngIf="addedOptions && addedOptions.length">
             <ul class="over-select list">
               <li *ngFor="let added of displayAddedItems">
@@ -20,19 +20,20 @@
       <div class="dropdown-wrapper">
         <div class="search-wrapper">
           <div class="search-container">
-            <input type="text" (keyup)="search($event)" [(ngModel)]="filter" class="search-input" [placeholder]="config.searchText"/>
+            <input type="text" (keyup)="search($event)" class="search-input" [placeholder]="defaultConfig.searchText"/>
           </div>
         </div>
         <div class="dropdown-list">
-        <label class="label-option select-all" (change)="selectAll($event)">
-          <input type="checkbox" [checked]="selectedAll" />{{ !this.selectedAll ? config.selectAllText : config.deSelectAllText}}
+        <label class="label-option select-all" *ngIf="!defaultConfig.singleSelection" (change)="selectAll($event)">
+          <input type="checkbox" [checked]="selectedAll" />{{ !this.selectedAll ? defaultConfig.selectAllText : defaultConfig.deSelectAllText}}
         </label>
         <label
           class="label-option"
+          [ngClass]="{ 'disable-multi-select': option.disabled }"
           *ngFor="let option of (_listOptions | MultiFilterSearch: filter)"
-          (change)="selectOptions($event, option)"
+          (click)="selectOptions($event, option)"
         >
-          <input type="checkbox" [checked]="option.selected" [ngClass]="{ 'hide-checkbox': !option.id }" />
+          <input type="checkbox" *ngIf="!defaultConfig.singleSelection" [checked]="option.selected" [ngClass]="{ 'hide-checkbox': !option.id }" />
           <span [ngClass]="{ 'align-center': !option.id }">{{ option.label }} </span>
         </label>
         </div>
