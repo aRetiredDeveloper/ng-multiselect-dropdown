@@ -38,6 +38,7 @@ export class NgSimpleMultiselectDropdownComponent implements OnInit {
         label: option[this.defaultConfig.labelKey],
         selected: option.selected,
         disabled: option.disabled}));
+    this._listOptions = this._listOptions.filter(option => option.id);
     this.setAddedOptions();
     this.setValue();
   };

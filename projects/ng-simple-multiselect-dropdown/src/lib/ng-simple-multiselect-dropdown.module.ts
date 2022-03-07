@@ -3,22 +3,20 @@ import { NgModule, ModuleWithProviders, CUSTOM_ELEMENTS_SCHEMA } from '@angular/
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgSimpleMultiselectDropdownComponent } from './ng-simple-multiselect-dropdown.component';
-import { EventOutsideClickDirective } from './event.directive';
+import { EventClickOutsideDirective } from './event.directive';
 import { MultiFilterSearch } from './ng-filter-search.pipe';
-
 @NgModule({
   imports: [CommonModule, FormsModule],
-  declarations: [NgSimpleMultiselectDropdownComponent, EventOutsideClickDirective, MultiFilterSearch],
+  declarations: [NgSimpleMultiselectDropdownComponent, EventClickOutsideDirective, MultiFilterSearch],
   providers: [MultiFilterSearch],
   exports: [NgSimpleMultiselectDropdownComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
-
 })
 
-export class NgMultiSelectDropDownModule {
-    static forRoot(): ModuleWithProviders<NgMultiSelectDropDownModule> {
+export class MultiSelectDropDownModule {
+    static forRoot(): ModuleWithProviders<MultiSelectDropDownModule> {
       return {
-        ngModule: NgMultiSelectDropDownModule
+        ngModule: MultiSelectDropDownModule
       };
     }
 }

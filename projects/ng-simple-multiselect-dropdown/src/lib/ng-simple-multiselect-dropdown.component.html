@@ -1,5 +1,5 @@
 <div class="mat-multiselect-dropdown" [ngClass]="{ 'disable-multi-select': defaultConfig.disable }">
-  <div eventDirective (eventOutside)="toggleDropDown($event, true)">
+  <div (eventClickOutside)="toggleDropDown($event, true)">
     <div class="selectBox" (click)="toggleDropDown($event)">
       <div class="option-select">
         <div class="left-div">
